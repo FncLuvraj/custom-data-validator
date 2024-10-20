@@ -39,7 +39,7 @@ A flexible and lightweight data validation library for Node.js applications.
 
 ## Installation
 
-Install the package via npm:
+# Install the package via npm:
 
 ```bash
 npm install custom-data-validator
@@ -81,7 +81,7 @@ const rules = {
 	fieldName: The name of the field in your data object.
 	•	rule1, rule2:param: Validation rules to apply to the field.
 
-Available Validation Rules
+# Available Validation Rules
 
 	•	required: The field must be present and not empty.
 	•	string: The field must be a string.
@@ -93,7 +93,7 @@ Available Validation Rules
 	•	maxLength:X: The string or array must be no more than X characters/items long.
 	•	regex:pattern: The string must match the provided regular expression pattern.
 
-Custom Validators
+# Custom Validators
 
 You can add your own custom validation functions to extend the validator’s capabilities.
 validator.addCustomValidator('isEven', (field, value, param, validatorInstance) => {
@@ -114,7 +114,7 @@ const isValid = validator.validate(data);
 if (!isValid) {
   console.log(validator.getErrors());
 }
-Error Handling
+# Error Handling
 
 The validator collects errors for each field during validation. Use validator.getErrors() to retrieve the errors.
 if (!isValid) {
@@ -125,7 +125,7 @@ if (!isValid) {
   //   code: ['code must be an even number.']
   // }
 }
-Examples
+# Examples
 
 Basic Usage
 const Validator = require('custom-data-validator');
@@ -155,7 +155,7 @@ if (isValid) {
   console.error('Validation errors:', validator.getErrors());
 }
 
-Custom Validation Function
+# Custom Validation Function
 
 // Custom validator to check if a number is positive
 validator.addCustomValidator('isPositive', (field, value, param, validatorInstance) => {
@@ -181,16 +181,16 @@ if (!isValid) {
   // }
 }
 
-API Reference
+# API Reference
 
-Validator Class
+# Validator Class
 
-Constructor
+# Constructor
 const validator = new Validator(rules);
 
 	•	rules: An object defining validation rules for each field.
 
-Methods
+# Methods
 
 	•	validate(data): Validates the provided data against the rules.
 	•	data: The data object to validate.
@@ -201,7 +201,7 @@ Methods
 	•	name: The name of the custom rule.
 	•	function: The validation function with the signature (field, value, param, validatorInstance).
 
-Built-in Validation Methods
+# Built-in Validation Methods
 
 	•	required(field, value)
 	•	string(field, value)
@@ -215,12 +215,12 @@ Built-in Validation Methods
 
 Each method performs a specific validation and adds an error message to the validator instance if the validation fails.
 
-Testing
+# Testing
 
 The package uses Jest for testing. To run the tests, use:
 npm test
 
-Example test case:
+# Example test case:
 const Validator = require('../lib/validator');
 
 describe('Validator Class', () => {
@@ -235,7 +235,7 @@ describe('Validator Class', () => {
 
   // More test cases...
 });
-Contributing
+# Contributing
 
 Contributions are welcome! Please follow these steps:
 
@@ -251,25 +251,25 @@ git push origin feature/your-feature-name
 
 Please ensure your code follows the project’s coding standards and includes appropriate tests.
 
-Coding Guidelines
+# Coding Guidelines
 
 	•	Write clear, concise, and self-documenting code.
 	•	Use consistent naming conventions.
 	•	Include comments where necessary.
 	•	Write unit tests for new features or bug fixes.
 
-Reporting Issues
+# Reporting Issues
 
 If you encounter any issues or bugs, please open an issue on GitHub with detailed information.
 
-License
+# License
 
 This project is licensed under the MIT License - see the LICENSE file for details.
 MIT License
 
 Permission is hereby granted, free of charge, to any person obtaining a copy...
 
-Acknowledgments
+# Acknowledgments
 
 	•	Inspired by the need for a simple yet powerful data validation solution in Node.js.
 	•	Thanks to the open-source community for continuous support and contributions.
