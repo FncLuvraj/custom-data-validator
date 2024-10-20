@@ -1,6 +1,6 @@
 # Custom Data Validator
 
-[![npm version](https://img.shields.io/npm/v/custom-data-validator.svg)](https://www.npmjs.com/package/custom-data-validator)
+[![npm version](https://img.shields.io/npm/v/custom-data-validator.svg)]([https://www.npmjs.com/package/custom-data-validator](https://www.npmjs.com/package/custom-data-validator))
 [![license](https://img.shields.io/npm/l/custom-data-validator.svg)](https://github.com/yourusername/custom-data-validator/blob/main/LICENSE)
 [![Build Status](https://img.shields.io/travis/yourusername/custom-data-validator.svg)](https://travis-ci.com/yourusername/custom-data-validator)
 [![Downloads](https://img.shields.io/npm/dt/custom-data-validator.svg)](https://www.npmjs.com/package/custom-data-validator)
