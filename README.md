@@ -39,7 +39,7 @@ A flexible and lightweight data validation library for Node.js applications.
 
 ## Installation
 
-Install the package via npm:
+# Install the package via npm:
 
 npm install custom-data-validator
 
@@ -82,6 +82,7 @@ const rules = {
 fieldName: ['rule1', 'rule2:param', 'customRule'],
 };
 
+
 -**fieldName**: The name of the field in your data object.
 **rule1, rule2**
 : Validation rules to apply to the field.
@@ -105,8 +106,12 @@ validateEmail: The field must be a valid email address.
 ## Auto-Trim and Case Normalization
 
 This feature ensures that user inputs are automatically trimmed of extra spaces and, optionally, case-normalized (e.g., making emails all lowercase). It significantly improves data consistency and reduces common user input issues, especially in forms.
+=======
+# Available Validation Rules
+
 
 # Why It's Impactful:
+
 
 **Improves Data Quality**: Prevents common errors like leading/trailing spaces in usernames, emails, or other fields that could cause validation issues.
 **User-Friendly**: Avoids user frustration with inputs being rejected for small formatting issues.
@@ -141,6 +146,10 @@ const isValid = validator.validate(data);
 
 ## Custom Validators
 
+# Custom Validators
+
+
+
 You can add your own custom validation functions to extend the validator’s capabilities.
 
 validator.addCustomValidator('isEven', (field, value, param, validatorInstance) => {
@@ -162,7 +171,8 @@ if (!isValid) {
 console.log(validator.getErrors());
 }
 
-## Error Handling
+# Error Handling
+
 
 The validator collects errors for each field during validation. Use validator.getErrors() to retrieve the errors.
 
@@ -174,6 +184,9 @@ console.log(errors);
 // code: ['code must be an even number.']
 // }
 }
+
+
+# Examples
 
 ## Examples
 
@@ -210,7 +223,11 @@ console.log('All data is valid!');
 console.error('Validation errors:', validator.getErrors());
 }
 
+
 ## Custom Validation Function
+
+# Custom Validation Function
+
 
 // Custom validator to check if a number is positive
 validator.addCustomValidator('isPositive', (field, value, param, validatorInstance) => {
@@ -236,9 +253,17 @@ console.log(validator.getErrors());
 // }
 }
 
+
 ## API Reference
 
 ## Validator Class
+
+# Constructor
+
+
+# API Reference
+
+# Validator Class
 
 # Constructor
 
@@ -257,7 +282,11 @@ const validator = new Validator(rules);
 **Name**: The name of the custom rule.
 **function**: The validation function with the signature (field, value, param, validatorInstance).
 
+
 ## Built-in Validation Methods
+
+# Built-in Validation Methods
+
 
 **required(field, value)**
 **string(field, value)**
@@ -280,12 +309,61 @@ npm test
 
 ## License
 
+# Testing
+
+The package uses Jest for testing. To run the tests, use:
+npm test
+
+# Example test case:
+const Validator = require('../lib/validator');
+
+describe('Validator Class', () => {
+  test('should validate required fields', () => {
+    const rules = { username: ['required'] };
+    const data = {};
+    const validator = new Validator(rules);
+    const isValid = validator.validate(data);
+    expect(isValid).toBe(false);
+    expect(validator.getErrors()).toHaveProperty('username');
+  });
+
+  // More test cases...
+});
+# Contributing
+
+Contributions are welcome! Please follow these steps:
+
+	1.	Fork the repository.
+	2.	Create a new branch:
+git checkout -b feature/your-feature-name
+  3.	Make your changes and commit them:
+git commit -m 'Add some feature'
+ 	4.	Push to the branch:
+git push origin feature/your-feature-name
+
+5.	Open a pull request.
+
+Please ensure your code follows the project’s coding standards and includes appropriate tests.
+
+# Coding Guidelines
+
+	•	Write clear, concise, and self-documenting code.
+	•	Use consistent naming conventions.
+	•	Include comments where necessary.
+	•	Write unit tests for new features or bug fixes.
+
+# Reporting Issues
+
+If you encounter any issues or bugs, please open an issue on GitHub with detailed information.
+
+# License
+
 This project is licensed under the MIT License - see the LICENSE file for details.
 MIT License
 
 Permission is hereby granted, free of charge, to any person obtaining a copy...
 
-Acknowledgments
+# Acknowledgments
 
     •	Inspired by the need for a simple yet powerful data validation solution in Node.js.
     •	Thanks to the open-source community for continuous support and contributions.
