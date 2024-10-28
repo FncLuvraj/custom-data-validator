@@ -471,26 +471,14 @@ npm test
 
 ## License
 
+This project is licensed under the MIT License - see the LICENSE file for details.
+MIT License
+
 # Testing
 
 The package uses Jest for testing. To run the tests, use:
 npm test
 
-# Example test case:
-const Validator = require('../lib/validator');
-
-describe('Validator Class', () => {
-  test('should validate required fields', () => {
-    const rules = { username: ['required'] };
-    const data = {};
-    const validator = new Validator(rules);
-    const isValid = validator.validate(data);
-    expect(isValid).toBe(false);
-    expect(validator.getErrors()).toHaveProperty('username');
-  });
-
-  // More test cases...
-});
 # Contributing
 
 Contributions are welcome! Please follow these steps:
