@@ -31,7 +31,7 @@ A flexible and lightweight data validation library for Node.js applications.
 ## Features
 
 - **Simple and Intuitive API**: Define validation rules with minimal code.
-- **Built-in Validation Rules**: Common validations like required fields, data types, length constraints, and pattern matching.
+- **Built-in Validation Rules**: Common validations like required fields, data types, length constraints, and pattern matching. -**Auto-Trim and Case Normalization**: Automatically trim whitespace and normalize case for string inputs.
 - **Custom Validation Support**: Easily add your own validation functions.
 - **Detailed Error Messages**: Provides clear and customizable error messages.
 - **Chainable Rules**: Apply multiple validation rules to a single field.
@@ -41,69 +41,125 @@ A flexible and lightweight data validation library for Node.js applications.
 
 # Install the package via npm:
 
-```bash
 npm install custom-data-validator
 
-const Validator = require('custom-data-validator');
+## Quick Start
+
+# Here's a simple example to get you started:
+
+const { Validator } = require('custom-data-validator');
 
 const rules = {
-  username: ['required', 'string', 'minLength:3', 'maxLength:15'],
-  email: ['required', 'string', 'regex:^\\S+@\\S+\\.\\S+$'],
-  age: ['number'],
-  isAdmin: ['boolean']
+username: ['required', 'string', 'minLength:3', 'maxLength:15'],
+email: ['required', 'string', 'validateEmail'],
+age: ['number'],
+isAdmin: ['boolean'],
 };
 
 const data = {
-  username: 'john_doe',
-  email: 'john@example.com',
-  age: 28,
-  isAdmin: false
+username: ' john_doe ',
+email: ' John.Doe@Example.com ',
+age: 28,
+isAdmin: false,
 };
 
 const validator = new Validator(rules);
 const isValid = validator.validate(data);
 
 if (isValid) {
-  console.log('Validation passed!');
+console.log('Validation passed!');
 } else {
-  console.log('Validation errors:', validator.getErrors());
+console.log('Validation errors:', validator.getErrors());
 }
 
-Usage
+## Usage
 
-Defining Validation Rules
+# Defining Validation Rules
 
 Validation rules are defined as an object where each key corresponds to a field in your data, and the value is an array of validation rules to apply to that field.
 
 const rules = {
-  fieldName: ['rule1', 'rule2:param', 'customRule']
+fieldName: ['rule1', 'rule2:param', 'customRule'],
 };
-	fieldName: The name of the field in your data object.
-	•	rule1, rule2:param: Validation rules to apply to the field.
 
+
+-**fieldName**: The name of the field in your data object.
+**rule1, rule2**
+: Validation rules to apply to the field.
+
+## Available Validation Rules
+
+**required**: The field must be present and not empty.
+**string**: The field must be a string.
+**number**: The field must be a number.
+**boolean**: The field must be a boolean.
+**array**: The field must be an array.
+**object**: The field must be an object.
+**minLength**
+: The string or array must be at least X characters/items long.
+**maxLength**
+: The string or array must be no more than X characters/items long.
+**regex**
+: The string must match the provided regular expression pattern.
+validateEmail: The field must be a valid email address.
+
+## Auto-Trim and Case Normalization
+
+This feature ensures that user inputs are automatically trimmed of extra spaces and, optionally, case-normalized (e.g., making emails all lowercase). It significantly improves data consistency and reduces common user input issues, especially in forms.
+=======
 # Available Validation Rules
 
-	•	required: The field must be present and not empty.
-	•	string: The field must be a string.
-	•	number: The field must be a number.
-	•	boolean: The field must be a boolean.
-	•	array: The field must be an array.
-	•	object: The field must be an object.
-	•	minLength:X: The string or array must be at least X characters/items long.
-	•	maxLength:X: The string or array must be no more than X characters/items long.
-	•	regex:pattern: The string must match the provided regular expression pattern.
+
+# Why It's Impactful:
+
+
+**Improves Data Quality**: Prevents common errors like leading/trailing spaces in usernames, emails, or other fields that could cause validation issues.
+**User-Friendly**: Avoids user frustration with inputs being rejected for small formatting issues.
+**Simple to Implement**: It only takes a few lines of code to add trimming and normalization before validation begins.
+**Auto-Trim: Remove leading and trailing spaces from all string inputs.
+**Email Normalization\*\*: Automatically convert email inputs to lowercase to avoid case-sensitivity issues.
+
+## Usage:
+
+By default, you should manually trim and normalize your inputs before validation to ensure data consistency.
+
+const { Validator, normalizeEmail } = require('custom-data-validator');
+
+const data = {
+username: ' JohnDoe ',
+email: ' John.Doe@Example.com ',
+};
+
+// Auto-trim string inputs
+data.username = data.username.trim();
+
+// Normalize email before validation
+data.email = normalizeEmail(data.email);
+
+const rules = {
+username: ['required', 'string', 'minLength:3'],
+email: ['required', 'validateEmail'],
+};
+
+const validator = new Validator(rules);
+const isValid = validator.validate(data);
+
+## Custom Validators
 
 # Custom Validators
 
+
+
 You can add your own custom validation functions to extend the validator’s capabilities.
+
 validator.addCustomValidator('isEven', (field, value, param, validatorInstance) => {
-  if (value % 2 !== 0) {
-    validatorInstance.addError(field, `${field} must be an even number.`);
-  }
+if (value % 2 !== 0) {
+validatorInstance.addError(field, `${field} must be an even number.`);
+}
 });
 
 const rules = {
-  code: ['required', 'number', 'isEven']
+code: ['required', 'number', 'isEven'],
 };
 
 const data = { code: 3 };
@@ -112,60 +168,76 @@ validator.rules = rules;
 const isValid = validator.validate(data);
 
 if (!isValid) {
-  console.log(validator.getErrors());
+console.log(validator.getErrors());
 }
+
 # Error Handling
 
+
 The validator collects errors for each field during validation. Use validator.getErrors() to retrieve the errors.
+
 if (!isValid) {
-  const errors = validator.getErrors();
-  console.log(errors);
-  // Output:
-  // {
-  //   code: ['code must be an even number.']
-  // }
+const errors = validator.getErrors();
+console.log(errors);
+// Output:
+// {
+// code: ['code must be an even number.']
+// }
 }
+
+
 # Examples
 
-Basic Usage
-const Validator = require('custom-data-validator');
+## Examples
+
+## Basic Usage
+
+const { Validator, normalizeEmail } = require('custom-data-validator');
 
 const rules = {
-  name: ['required', 'string', 'minLength:2'],
-  email: ['required', 'string', 'regex:^\\S+@\\S+\\.\\S+$'],
-  password: ['required', 'string', 'minLength:6'],
-  age: ['number'],
-  termsAccepted: ['required', 'boolean']
+name: ['required', 'string', 'minLength:2'],
+email: ['required', 'validateEmail'],
+password: ['required', 'string', 'minLength:6'],
+age: ['number'],
+termsAccepted: ['required', 'boolean'],
 };
 
 const data = {
-  name: 'Alice',
-  email: 'alice@example.com',
-  password: 'secret123',
-  age: 30,
-  termsAccepted: true
+name: ' Alice ',
+email: ' alice@example.com ',
+password: 'secret123',
+age: 30,
+termsAccepted: true,
 };
+
+// Auto-trim and normalize inputs
+data.name = data.name.trim();
+data.email = normalizeEmail(data.email);
 
 const validator = new Validator(rules);
 const isValid = validator.validate(data);
 
 if (isValid) {
-  console.log('All data is valid!');
+console.log('All data is valid!');
 } else {
-  console.error('Validation errors:', validator.getErrors());
+console.error('Validation errors:', validator.getErrors());
 }
+
+
+## Custom Validation Function
 
 # Custom Validation Function
 
+
 // Custom validator to check if a number is positive
 validator.addCustomValidator('isPositive', (field, value, param, validatorInstance) => {
-  if (value <= 0) {
-    validatorInstance.addError(field, `${field} must be a positive number.`);
-  }
+if (value <= 0) {
+validatorInstance.addError(field, `${field} must be a positive number.`);
+}
 });
 
 const rules = {
-  amount: ['required', 'number', 'isPositive']
+amount: ['required', 'number', 'isPositive'],
 };
 
 const data = { amount: -5 };
@@ -174,46 +246,68 @@ validator.rules = rules;
 const isValid = validator.validate(data);
 
 if (!isValid) {
-  console.log(validator.getErrors());
-  // Output:
-  // {
-  //   amount: ['amount must be a positive number.']
-  // }
+console.log(validator.getErrors());
+// Output:
+// {
+// amount: ['amount must be a positive number.']
+// }
 }
+
+
+## API Reference
+
+## Validator Class
+
+# Constructor
+
 
 # API Reference
 
 # Validator Class
 
 # Constructor
+
 const validator = new Validator(rules);
 
-	•	rules: An object defining validation rules for each field.
+**rules**: An object defining validation rules for each field.
 
 # Methods
 
-	•	validate(data): Validates the provided data against the rules.
-	•	data: The data object to validate.
-	•	Returns: true if validation passes, false otherwise.
-	•	getErrors(): Retrieves the errors collected during validation.
-	•	Returns: An object where keys are field names and values are arrays of error messages.
-	•	addCustomValidator(name, function): Adds a custom validation function.
-	•	name: The name of the custom rule.
-	•	function: The validation function with the signature (field, value, param, validatorInstance).
+**validate(data)**: Validates the provided data against the rules.
+**data**: The data object to validate.
+**Returns**: true if validation passes, false otherwise.
+**getErrors()**: Retrieves the errors collected during validation.
+**Returns**: An object where keys are field names and values are arrays of error messages.
+**addCustomValidator(name, function)**: Adds a custom validation function.
+**Name**: The name of the custom rule.
+**function**: The validation function with the signature (field, value, param, validatorInstance).
+
+
+## Built-in Validation Methods
 
 # Built-in Validation Methods
 
-	•	required(field, value)
-	•	string(field, value)
-	•	number(field, value)
-	•	boolean(field, value)
-	•	array(field, value)
-	•	object(field, value)
-	•	minLength(field, value, length)
-	•	maxLength(field, value, length)
-	•	regex(field, value, pattern)
+
+**required(field, value)**
+**string(field, value)**
+**number(field, value)**
+**boolean(field, value)**
+**array(field, value)**
+**object(field, value)**
+**minLength(field, value, length)**
+**maxLength(field, value, length)**
+**regex(field, value, pattern)**
+**validateEmail(field, value)**
 
 Each method performs a specific validation and adds an error message to the validator instance if the validation fails.
+
+## Testing
+
+The package uses Jest for testing. To run the tests, use:
+
+npm test
+
+## License
 
 # Testing
 
@@ -271,13 +365,17 @@ Permission is hereby granted, free of charge, to any person obtaining a copy...
 
 # Acknowledgments
 
-	•	Inspired by the need for a simple yet powerful data validation solution in Node.js.
-	•	Thanks to the open-source community for continuous support and contributions.
+    •	Inspired by the need for a simple yet powerful data validation solution in Node.js.
+    •	Thanks to the open-source community for continuous support and contributions.
 
 Feel free to copy this entire README.md into your GitHub repository. Make sure to:
 
-	•	Replace placeholders like yourusername with your actual GitHub username.
-	•	Update any links to point to your repository or relevant pages.
-	•	Customize the content as needed, especially the License section and any personal acknowledgments.
+    •	Replace placeholders like yourusername with your actual GitHub username.
+    •	Update any links to point to your repository or relevant pages.
+    •	Customize the content as needed, especially the License section and any personal acknowledgments.
 
 Let me know if you need any more assistance!
+
+```
+
+```
