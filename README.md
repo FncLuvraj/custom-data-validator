@@ -35,6 +35,7 @@ A flexible and lightweight data validation library for Node.js applications.
 - **Detailed Error Messages**: Provides clear and customizable error messages.
 - **Chainable Rules**: Apply multiple validation rules to a single field.
 - **Field-wise Validation**: Validates each field independently for precise error reporting.
+- **Password Validation**: Ensures passwords meet strong criteria, such as length, uppercase, special character, and numeric requirements.
 
 ## Installation
 
@@ -103,6 +104,7 @@ fieldName: ['rule1', 'rule2:param', 'customRule'],
 - **regex**
 : The string must match the provided regular expression pattern.
 validateEmail: The field must be a valid email address.
+- **validatePassword**: Validates that a password meets specific strength criteria (e.g., minimum length, uppercase letter, special character, and number).
 
 ## Auto-Trim and Case Normalization
 
@@ -154,10 +156,6 @@ const isValid = validator.validate(data);
 
 ## Custom Validators
 
-# Custom Validators
-
-
-
 You can add your own custom validation functions to extend the validator’s capabilities.
 ```javascript
 validator.addCustomValidator('isEven', (field, value, param, validatorInstance) => {
@@ -194,13 +192,31 @@ console.log(errors);
 // }
 }
 ```
-
-
-# Examples
-
 ## Examples
 
 ## Basic Usage
+
+## Password Validation Example
+
+```javascript
+const rules = {
+  password: ["validatePassword"]
+};
+
+const data = {
+  password: "Strong@123"
+};
+
+const validator = new Validator(rules);
+const isValid = validator.validate(data);
+
+if (!isValid) {
+  console.log(validator.getErrors());
+} else {
+  console.log("Password is valid.");
+}
+```
+
 ```javascript
 const { Validator, normalizeEmail } = require('custom-data-validator');
 
@@ -332,6 +348,7 @@ Adds a custom validation function to extend the built-in validators.
 
 **name**: The name of the custom rule.
 **validationFunction**: A function with the signature (field, value, param, validatorInstance) that performs the validation.
+- **validatePassword(field, value, minLength = 8)**: Validates that a password contains at least one uppercase letter, one special character, one number, and meets a minimum length requirement (default is 8 characters).
 
 Example:
 
@@ -465,7 +482,8 @@ Each method performs a specific validation and adds an error message to the vali
 ## Testing
 
 The package uses Jest for testing. To run the tests, use:
-
+The package includes tests for password validation to ensure strong passwords are enforced. You can run the tests by executing:
+```bash
 npm test
 
 ## License

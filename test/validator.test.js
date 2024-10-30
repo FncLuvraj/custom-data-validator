@@ -30,4 +30,30 @@ describe("Validator Class", () => {
     expect(isValid).toBe(false);
     expect(validator.getErrors()).toHaveProperty("email");
   });
+
+ 
+// password validation
+describe("Password Validation", () => {
+  test("should pass for a strong password", () => {
+    const validator = new Validator();
+    validator.validatePassword("password", "Strong@123");
+    expect(validator.getErrors()).toEqual({});
+  });
+
+  test("should fail if password is missing uppercase, special character, or number", () => {
+    const validator = new Validator();
+
+    // Test for missing uppercase
+    validator.validatePassword("password", "weakpassword@123");
+    expect(validator.getErrors()).toHaveProperty("password");
+
+    // Test for missing special character
+    validator.validatePassword("password", "Weakpassword123");
+    expect(validator.getErrors()).toHaveProperty("password");
+
+    // Test for missing number
+    validator.validatePassword("password", "Weakpassword@");
+    expect(validator.getErrors()).toHaveProperty("password");
+  });
+});
 });
